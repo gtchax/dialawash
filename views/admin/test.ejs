@@ -1,0 +1,59 @@
+<%- include('../includes/admin-head.ejs') %>
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">
+        <% if(editing) { %>Edit Product
+        <% } else { %>Add Product
+        <%}%>
+    </li>
+</ol>
+
+<!-- Icon Cards-->
+<div class="row">
+    <%if (errorMessage) {%>
+    <div style="margin: 1rem auto 1.4rem auto;" class="text-center">
+        <span class="btn-danger error-message">
+            <%= errorMessage %></span>
+
+    </div>
+    <% }%>
+    <div class="col">
+<form action="<% if(editing) { %>/admin/edit-product <% } else { %>/admin/add-product <%}%>" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+
+<div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control <%= validationErrors.find(e => e.param === 'title') ? 'invalid' : ''%>" name="title"
+        id="title" value="<% if(editing || hasError) { %> <%=product.title %> <% }%>">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% if(editing) { %>
+<input type="hidden" value="<%= product.id%>" name="productId">
+<% } %>
+    <button type="submit" class="btn btn-success mb-5">
+        <% if(editing) { %>Update Product
+        <% } else { %>Add product
+        <%}%></button>
+</form>
+    </div>
+</div>
+
+
+<%- include('../includes/admin-foot.ejs') %>

@@ -6,6 +6,9 @@ const session = require('express-session');
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
+const compression = require('compression');
+const morgan = require('morgan');
+const fs = require('fs');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // const ejs = require('ejs');
 
@@ -43,7 +46,6 @@ const shopRoute = require('./routes/shop');
 const authRoute = require('./routes/auth');
 const errorController = require('./controllers/error');
 
-const PORT = 3050;
 const app = express();
 
 // Middleware
@@ -56,7 +58,16 @@ app.use(multer({
     fileFilter,
 }).single('image'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
+
+
 app.use(helmet());
+app.use(compression());
+app.use(morgan('combined', {
+    stream: accessLogStream
+}));
 app.use(cookieParser())
 app.use(session({
     secret: 'keyboard secret',
@@ -164,10 +175,11 @@ sequelize.sync()
         //     price: 10,
         //     description: 'You bring your vehicle(s) to the carwash centre'
         // });
-        app.listen(PORT, () => {
-            console.log(`App listening on port ${PORT}`);
+        app.listen(process.env.PORT, () => {
+            console.log(`App listening on port ${process.env.PORT}`);
         })
     })
 
     .catch(err => console.log(err))
+
 

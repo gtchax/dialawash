@@ -24,8 +24,8 @@
                             <ul>
                                 <%   orders.forEach(order => { %>
                                 <li>
-                                    <h1 class="main-text">#
-                                        <%= order.id %>
+                                    <h1 class="main-text">Order - # 
+                                        <%= order.id %> - <a href="/orders/<%= order.id %>">Invoice</a>
                                     </h1>
                                     <ul>
                                         <li class="main-text">

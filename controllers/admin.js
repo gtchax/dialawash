@@ -1,4 +1,5 @@
-const Product = require('../models/product')
+const Product = require('../models/product');
+const fileHelper = require('../util/file');
 const {
     validationResult
 } = require('express-validator/check')
@@ -22,7 +23,7 @@ exports.postAddProduct = (req, res, next) => {
         price,
         description,
     } = req.body;
-    const imageUrl = req.file;
+    const image = req.file;
     const errors = validationResult(req)
 
     if (!image) {
@@ -53,7 +54,7 @@ exports.postAddProduct = (req, res, next) => {
                 title,
                 price,
                 description,
-                imageUrl
+
 
             },
             errorMessage: errors.array()[0].msg,
@@ -115,7 +116,7 @@ exports.postEditProduct = (req, res, next) => {
     const prodId = req.body.productId;
     const updatedTitle = req.body.title;
     const updatedPrice = req.body.price;
-    const updatedImageUrl = req.file;
+    const image = req.file;
     const updatedDesc = req.body.description;
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -128,7 +129,6 @@ exports.postEditProduct = (req, res, next) => {
                 title: updatedTitle,
                 price: updatedPrice,
                 description: updatedDesc,
-                imageUrl: updatedImageUrl,
                 prod: prodId
 
             },
@@ -142,7 +142,11 @@ exports.postEditProduct = (req, res, next) => {
             product.title = updatedTitle;
             product.price = updatedPrice;
             product.description = updatedDesc;
-            product.imageUrl = updatedImageUrl;
+            if (image) {
+                fileHelper.deleteFile(product.imageUrl);
+                product.imageUrl = image.path;
+            }
+
             return product.save();
         })
         .then(result => {
@@ -191,14 +195,17 @@ exports.getDashboard = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
-    Product.findByPk(prodId)
-        .then(product => {
+    Product.findByPk(prodId).then(product => {
+            fileHelper.deleteFile(product.imageUrl);
             return product.destroy();
         })
         .then(result => {
             res.redirect('/admin/products')
 
         })
+        .catch(err => next(err))
+
+
 
 }
 
