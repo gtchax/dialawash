@@ -1,0 +1,21 @@
+body {
+    background: rgba(5, 56, 110, 1);
+    color: #fff;
+    position: relative;
+    margin: 0;
+    padding: 0;
+
+}
+
+.page404 {
+    height: 100vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}
+.btn-404 {
+    background: transparent;
+    border: 2px solid #fff;
+    margin-top: 2em;
+    color: #fff;
+}

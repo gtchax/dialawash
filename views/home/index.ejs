@@ -1,0 +1,194 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+   <%- include('../includes/navbar.ejs') %>
+
+   <main class="homepage">
+      <% if (isAuthenticated) {%>
+     
+      <% }%>
+      <div class="notice text-center">
+         Dailawash services currently available in Mutare ONLY
+      </div>
+      <div class="container-fluid">
+         <h1 class="text-center my-5 slim">Carwash made simple and convenient</h1>
+         <div class="text-center">
+
+            <% if(hasProducts) {
+                           products.forEach(product => { %>
+
+            <div id="<%= product.title.replace(/ +/g, '').toLowerCase() %>-box" class="home-form-container">
+
+               <h3 class="mb-0 text-orange">
+                  <%= product.title %>
+               </h3>
+               <p class=" mb-auto ">
+                  <%= product.description %>
+               </p>
+            </div>
+
+            <%  }) 
+                           } %>
+         </div>
+         <div class="row mt-5 ">
+            <div class="col-sm-12 home-form-container">
+               <form action="/purchase" method="POST">
+
+                  <div class="form-group">
+                     <select name="services" id="serviceOptions" class="form-control">
+                        <option value="0" disabled selected>Select A Service</option>
+                        <% if(hasProducts) {
+                           products.forEach(product => { %>
+                        <option id="<%= product.title.replace(/ +/g, '').toLowerCase() %>" value="<%= product.title.replace(/ +/g, '').toLowerCase() %>">
+                           <%= product.title  %>
+                           $<%= product.price  %>
+                        </option>
+                        <%  }) 
+                           } else {%>
+                        <option value="-1" disabled>No Services available</option>
+                        <%  } %>
+
+                     </select>
+                  </div>
+
+                  <div class="form-group" id="callout-data">
+                     <div class="row">
+                        <div class="col-sm-6">
+                           <div class="form-group">
+                              <input type="text" class="form-control" name="fullname" placeholder="Name">
+                           </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                           <div class="form-group">
+                              <input type="text" class="form-control" name="location" placeholder="Vehicle Pick Up Address">
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group">
+                        <label for="carwash-time">Carwash appointment</label>
+                        <input type="datetime-local" id="carwash-time" name="appointment" min="2019-01-01T06:00" max="2019-12-31T18:00"
+                           class="form-control">
+                     </div>
+
+                  </div>
+
+                  <div id="inhouse-data">
+                     <div class="form-group">
+                        <label for="carwash-time">Carwash appointment</label>
+                        <input type="datetime-local" id="carwash-time2" name="appointment2" min="2019-01-01T06:00" max="2019-12-31T18:00"
+                           class="form-control">
+                     </div>
+                  </div>
+
+
+                  <div class="form-group">
+                     <input type="number" class="form-control" name="phone" placeholder="Contact Number">
+                  </div>
+
+                  <div id="service-data">
+
+                     <div class="panel-group driving-license-settings" id="accordion">
+                        <div class="panel panel-default">
+                           <div class="panel-heading">
+                              <h4 class="panel-title">
+                                 <div class="checkbox">
+                                    <label data-toggle="collapse" data-target="#collapseOne">
+                                       <input type="checkbox" /> Add extras
+                                    </label>
+                                 </div>
+                              </h4>
+
+                           </div>
+                           <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                 <div class="driving-license-kind">
+                                    <div class="row">
+                                       <div class="col-sm-6">
+                                          <h5 class="text-orange">Exterior</h5>
+                                          <div class="checkbox">
+                                             <input class="form-check-input" name="waxing" type="checkbox" id="service-waxing"
+                                                value="e1">
+                                             <label class="form-check-label" for="service-waxing">Waxing ($3.00)</label>
+
+                                          </div>
+                                          <div class="checkbox">
+                                             <input class="form-check-input" name="underbelly" type="checkbox" id="service-underbelly"
+                                                value="e2">
+                                             <label class="form-check-label" for="service-underbelly">Under Belly
+                                                flashing
+                                                ($2.00)</label>
+
+                                          </div>
+                                          <div class="checkbox">
+                                             <input class="form-check-input" name="engine" type="checkbox" id="service-engine"
+                                                value="e3">
+                                             <label class="form-check-label" for="service-engine">Engine Cleaning
+                                                ($3.00)</label>
+
+                                          </div>
+                                       </div>
+                                       <div class="col-sm-6">
+                                          <h5 class="text-orange">Interior</h5>
+                                          <div class="checkbox">
+                                             <input class="form-check-input" name="roof" type="checkbox" id="service-roof"
+                                                value="interior1">
+                                             <label class="form-check-label" for="service-roof">Roof Cleaning ($5.00)</label>
+
+                                          </div>
+                                          <div class="checkbox">
+                                             <input class="form-check-input" name="leather" type="checkbox" id="service-spray"
+                                                value="interior2">
+                                             <label class="form-check-label" for="service-spray">Leather Spray ($5.00)</label>
+
+                                          </div>
+
+                                          <div class="checkbox">
+                                             <input class="form-check-input" name="dashboard" type="checkbox" id="service-dashboard"
+                                                value="interiro3">
+                                             <label class="form-check-label" for="service-dashboard">Dashboard Wax
+                                                ($4.00)</label>
+                                          </div>
+                                          <div class="checkbox">
+                                             <input class="form-check-input" name="deodorise" type="checkbox" id="service-dashboard"
+                                                value="interiro4">
+                                             <label class="form-check-label" for="service-deodorise">Deodorising
+                                                ($3.00)</label>
+                                          </div>
+                                          <div class="checkbox">
+
+                                          </div>
+                                       </div>
+                                    </div>
+
+
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+
+                     <div class="form-group">
+                        <button type="submit" class="btn pay-btn"> Pay Now</button>
+                     </div>
+
+
+
+
+
+                  </div><!-- from container -->
+
+               </form>
+            </div>
+         </div>
+      </div>
+
+
+
+
+   </main>
+   <%- include('../includes/foot.ejs') %>

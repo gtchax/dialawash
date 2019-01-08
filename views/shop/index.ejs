@@ -1,0 +1,60 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <%- include('../includes/navbar.ejs') %>
+
+    <main class="mt-5">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <h2>Shop</h2>
+                    <small class="form-text text-muted">Services and products</small>
+                </div>
+
+            </div>
+            <div class="row">
+
+
+                <% if(hasProducts) {
+                        products.forEach(product => { %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card-box card-1">
+
+                        <div class="card-body">
+                            <h5 class="card-title main-text text-upper">
+                                <%= product.title%>
+                            </h5>
+                            <p class="card-text main-text">
+                                <%= product.description%>
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item no-border price-text text-right">$
+                                <%= product.price%>
+                            </li>
+
+                        </ul>
+                        <div class="text-center">
+                            <% if (isAuthenticated) {%>
+                            <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+                            <% } else {%>
+                            <a href="/auth/login" class="py-10 text-center card-price ">Login to Buy</a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <%  }) 
+                    } %>
+
+
+
+
+            </div>
+        </div>
+
+    </main>
+    <%- include('../includes/foot.ejs') %>

@@ -1,0 +1,73 @@
+<%- include('../includes/admin-head.ejs') %>
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Transactions</li>
+</ol>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Dialawash Transactions</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Service</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Start date</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Service</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Start date</th>
+                        <th>Price</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr>
+                        <td>Tiger Nixon</td>
+                        <td>Call Out</td>
+                        <td>0773897456</td>
+                        <td>61 Jason Moyo</td>
+                        <td>2011/04/25</td>
+                        <td>$30.00</td>
+                    </tr>
+                    <tr>
+                        <td>Garrett Winters</td>
+                        <td>In House</td>
+                        <td>0792374856</td>
+                        <td>4 Main Street</td>
+                        <td>2011/07/25</td>
+                        <td>$20.00</td>
+                    </tr>
+                    <tr>
+                        <td>Ashton Cox</td>
+                        <td>Drive Through</td>
+                        <td>08679574932</td>
+                        <td>9 Joina Road</td>
+                        <td>2009/01/12</td>
+                        <td>$10.00</td>
+                    </tr>
+                    
+                 
+                 
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <%- include('../includes/admin-foot.ejs') %>

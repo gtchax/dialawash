@@ -1,0 +1,68 @@
+<%- include('../includes/admin-head.ejs') %>
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Products</li>
+</ol>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Price</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <!-- <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Service</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Start date</th>
+                        <th>Price</th>
+                    </tr>
+                </tfoot> -->
+                <tbody>
+                    <% if(hasProducts) {
+                           products.forEach(product => { %>
+                    <tr>
+                        <td>
+                            <%= product.title %>
+                        </td>
+                        <td>
+                            <%= product.price %>
+                        </td>
+                        <td><a href="/admin/edit-product/<%=product.id%>?edit=true"><i class="fa fa-info text-info "></i></a></td>
+                        <td>
+                            <form action="/admin/delete-product" method="POST">
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" value="<%= product.id%>" name="productId">
+                                <button type="submit"><i class="fa fa-trash text-danger "></i></button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    <%  }) 
+                           } else {%>
+                    <h2>No Products</h2>
+                    <%  } %>
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <%- include('../includes/admin-foot.ejs') %>

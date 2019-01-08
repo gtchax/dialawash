@@ -1,0 +1,85 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <%- include('../includes/navbar.ejs') %>
+
+    <main class="cartpage mt-5">
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2>Shopping Cart</h2>
+                    <small class="form-text text-muted">Services and products</small>
+                </div>
+
+            </div>
+            <% if(hasProducts) {
+                           products.forEach(product => { %>
+            <div class="row">
+
+                <div class="col-sm-12 text-center">
+
+
+                    <div class="card-cart card-1">
+
+
+
+                        <div class="card-body" style="padding: 0.9rem">
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="cart-product">
+                                        <%= product.title%>
+                                    </p>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p class="cart-quantity">
+                                        Quantity:
+                                        <%= product.cartItem.quantity %>
+                                    </p>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p class="cart-price">
+                                        $
+                                        <%= product.price %>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="cart-delete">
+                                <form action="/shop/cart-delete-item" method="POST">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input type="hidden" value="<%= product.id%>" name="productId">
+                                    <button type="submit" class="btn-danger cart-btn">x</button>
+                                </form>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+            <%  }) 
+                           } else {%>
+            <h2 class="text-center">No Products in Cart</h2>
+            <%  } %>
+
+            <% if(hasProducts) { %>
+            <div class="row">
+                <form action="/shop/create-order" method="POST" style="margin: 0 auto;">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="btn pay-btn">Order Now</button>
+                </form>
+            </div>
+            <% } %>
+    </main>
+    <%- include('../includes/foot.ejs') %>

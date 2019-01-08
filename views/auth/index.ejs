@@ -1,0 +1,42 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <%- include('../includes/navbar.ejs') %>
+
+    <main class=" mt-5">
+        <%if (errorMessage) {%>
+        <div style="margin: 1rem auto;" class="text-center">
+            <span class="btn-danger error-message">
+                <%= errorMessage %></span>
+
+        </div>
+        <% }%>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 loginpage">
+                    <form action="/auth/login" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control login-input <%= validationErrors.find(e => e.param === 'email') ? 'invalid' : ''%>"
+                            value="<%= oldInput.email %>">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-control login-input <%= validationErrors.find(e => e.param === 'password') ? 'invalid' : ''%>"
+                            value="<%= oldInput.password %>">
+                        <button type="submit" class="btn btn-success">Login</button>
+                    </form>
+
+                </div>
+            </div>
+            <div class="loginpage">
+                <p style="display: block;">No account: <a href="/auth/signup" class="" style="color: #fff; padding-left: 8px; ">
+                        Sign
+                        Up</a></p><br />
+                <p style="display: block;"><a href="/auth/reset" style="color: #fff; text-align: left; display: block;">Reset
+                        password</a></p>
+            </div>
+        </div>
+
+    </main>
+    <%- include('../includes/foot.ejs') %>

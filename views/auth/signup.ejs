@@ -1,0 +1,71 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <%- include('../includes/navbar.ejs') %>
+
+    <main class=" mt-5">
+        <div class="container">
+            <%if (errorMessage) {%>
+            <div style="margin: 1rem auto 1.4rem auto;" class="text-center">
+                <span class="btn-danger error-message">
+                    <%= errorMessage %></span>
+
+            </div>
+            <% }%>
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <form action="/auth/signup" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstname" class="form-block">First Name</label>
+                                    <input type="text" name="firstname" id="firstname" class="form-control signup-input"
+                                        value="<%= oldInput.firstname %>">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+
+                                    <label for="firstname" class="form-block">Last Name</label>
+                                    <input type="text" name="lastname" id="lastname" class="form-control signup-input"
+                                        value="<%= oldInput.lastname %>">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="form-block">Email</label>
+                                    <input type="email" name="email" id="email" class="form-control signup-input <%= validationErrors.find(e => e.param === 'email') ? 'invalid' : ''%>" value="<%= oldInput.email %>">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label for="phone" class="form-block">Phone Number</label>
+<input type="number" name="phone" id="phone" class="form-control signup-input <%= validationErrors.find(e => e.param === 'phone') ? 'invalid' : ''%>"
+                                        value="<%= oldInput.phone %>">
+                                </div>
+                            </div>
+
+                        </div>
+                        <label for="password">Password</label>
+<input type="password" name="password" id="password" class="form-control signup-input <%= validationErrors.find(e => e.param === 'password') ? 'invalid' : ''%>"
+    value="<%= oldInput.password %>">
+                        <label for="password">Confirm Password</label>
+<input type="password" name="confirmpassword" id="confirmpassword" class="form-control signup-input <%= validationErrors.find(e => e.param === 'confirmpassword') ? 'invalid' : ''%>"
+                            value="<%= oldInput.confirmpassword %>">
+                        <button type="submit" class="btn btn-success">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../includes/foot.ejs') %>
