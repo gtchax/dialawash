@@ -1,4 +1,5 @@
-const Product = require('../models/product')
+const Product = require('../models/product');
+var Order = require('../models/order');
 const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
@@ -54,16 +55,36 @@ exports.getProduct = (req, res, next) => {
         .catch(err => console.log(err))
 }
 
-
-
 exports.getCart = (req, res, next) => {
+
     req.user.getCart()
-        .then(cart => {
-            return cart.getProducts().then(products => {
+        .then(basket => {
+            if (basket) {
+                console.log(` THE BASKET ${basket}`)
+            } else {
+                req.user.createCart().then(cart => {
+                    console.log(` THE CART ${cart}`)
+                    return cart.getProducts().then(products => {
+
+                        return res.render('shop/cart', {
+                            pageTitle: 'Your Cart',
+                            path: '/cart',
+                            products: ['shoe'],
+                            products: products,
+                            hasProducts: products.length > 0,
+                        })
+                    }).catch(err => console.log(err))
+                })
+
+            }
+
+
+            return basket.getProducts().then(products => {
 
                 return res.render('shop/cart', {
                     pageTitle: 'Your Cart',
                     path: '/cart',
+                    products: ['shoe'],
                     products: products,
                     hasProducts: products.length > 0,
                 })
@@ -143,17 +164,33 @@ exports.postOrder = (req, res, next) => {
         .getCart()
         .then(cart => {
             fetchedCart = cart;
-            return cart.getProducts
+            return fetchedCart.getProducts()
         })
         .then(products => {
             return req.user
+
                 .createOrder()
-                .then(order => order.addProducts(products.map(product => {
-                    product.orderItem = {
-                        quantity: product.cartItem.quantity
-                    }
-                    return product
-                })))
+                .then(order => {
+
+                    order.addProducts(products.map(product => {
+                        product.orderItem = {
+                            quantity: product.cartItem.quantity
+                        }
+                        return product
+                    }));
+                })
+
+                .catch(err => console.log(err))
+
+                .then(order => order.addProducts(products => {
+                    products.map(product => {
+
+                        product.orderItem = {
+                            quantity: product.cartItem.quantity
+                        }
+                        return product
+                    })
+                }))
                 .catch(err => console.log(err))
         })
         .then(result => {
@@ -168,6 +205,7 @@ exports.postOrder = (req, res, next) => {
 exports.getOrders = (req, res, next) => {
 
     req.user
+        //  .setOrders(null)
         .getOrders({
             include: ['products']
         })
@@ -177,35 +215,16 @@ exports.getOrders = (req, res, next) => {
                 orders: orders,
                 hasOrders: orders.length > 0,
                 path: '/shop/orders',
-
-
-
-
             })
         })
         .catch(err => console.log(err))
 
 }
 
-exports.getInvoice = (req, res, next) => {
-    const orderdId = req.params.orderId;
-    const invoiceName = 'invoice-' + orderId + '.pdf';
-    const invoicePath = path.join('data', 'invoices', invoiceName);
 
-    const pdfDoc = new PDFDocument();
-    pdfDoc.pipe(fs.createWriteStream(invoicePath));
-    pdfDoc.pipe(res);
+exports.pdf = (req, res, next) => {
+    const orderId = req.params.orderId;
 
-    pdfDoc.fontSize(26).text('Invoice', {
-        underline: true
-    })
-    let totlaPrice = 0
-    order.products.forEach(prod => {
-        totlaPrice += prod.quantity * prod.product.price
-        pdfDoc.fontSize(16).text(prod.product.title + ' - ' + prod.quantity + ' x ' + '$' + prod.product.price)
-    })
-
-    pdfDoc.end()
 
 
     Order.findByPk(orderId)
@@ -213,40 +232,159 @@ exports.getInvoice = (req, res, next) => {
             if (!order) {
                 return next(new Error('No order found'))
             }
-            if (order.user.userId.toString() !== req.user.id.toString()) {
+            if (order.userId.toString() !== req.user.id.toString()) {
                 return next(new Error('Unauthorized'))
             }
 
-            //    fs.readFile(invoicePath, (err, data) => {
-            //        if (err) {
-            //            return next(err)
-            //        }
-            //        res.setHeader('Content-Type', 'application/pdf');
-            //        res.setHeader('Content-Disposition', 'attachment; filename="' + invoiceName + '"')
-            //        res.send(data)
-            //    })
-            const file = fs.createReadStream(invoicePath);
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', 'attachment; filename="' + invoiceName + '"');
-         
+                let d = new Date()
+
+                let day = d.getDate().toString()
+                let month = d.getMonth() + 1;
+                if (month <= 9) {
+                    month = '0' + month.toString()
+                } else {
+                    month = '0' + month.toString()
+                }
+                let year = d.getFullYear().toString();
+                let fulldate = day + '/' + month + '/' + year
+
+            order.getProducts().then(products => {
+
+                let totalPrice = 0;
+                   products.forEach(product => {
+                     totalPrice +=  product.price
+                   })
+                return res.render('shop/invoice', {
+                    pageTitle: 'Invoice',
+                    orderId,
+                    path: '/pdf',
+                    // date: Date().toString(),
+                    products,
+                    date: fulldate,
+                    totalPrice,
+                    order
+                    // totalPrice
+                })
+            })
+            .catch(err => console.log(err))
+
+
+            // const invoiceName = 'invoice-' + orderId + '.pdf';
+            // const invoicePath = path.join('data', 'invoices', invoiceName);
+            // const pdfDoc = new PDFDocument();
+            // res.setHeader('Content-Type', 'application/pdf');
+            // res.setHeader('Content-Disposition', 'inline; filename="' + invoiceName + '"')
+            // pdfDoc.pipe(fs.createWriteStream(invoicePath));
+            // pdfDoc.pipe(res);
+          
+            // pdfDoc.text('Dialawash')
+
+            // pdfDoc.end()
+          
+            // let totalPrice = 0
+
+            //  order.forEach(prod => {
+            //      totlaPrice += prod.quantity * prod.product.price
+            //     //  pdfDoc.fontSize(16).text(prod.product.title + ' - ' + prod.quantity + ' x ' + '$' + prod.product.price)
+            //  })
+
+
+           
+
+
+
+
+            // res.render('shop/invoice', {
+            //     pageTitle: 'Invoice',
+            //     orderId,
+            //     path: '/pdf',
+            //     // date: Date().toString(),
+            //         date: fulldate,
+            //     order
+            //     // totalPrice
+            // })
+
+            // res.setHeader('Content-Type', 'application/pdf');
+            // res.setHeader('Content-Disposition', 'inline; filename="' + invoiceName + '"');
+
 
         })
         .catch(err => next(err))
 
 
+}
 
-    Product.findByPk(prodId)
-        .then(product => {
-            res.render('shop/product-detail', {
-                pageTitle: product.title,
-                products: product,
-                path: '/product',
-
+exports.getInvoice = (req, res, next) => {
+    const orderId = req.params.orderId;
+    const invoiceName = 'invoice-' + orderId + '.pdf';
+    const invoicePath = path.join('data', 'invoices', invoiceName);
 
 
-            })
-        })
-        .catch(err => console.log(err))
+
+    //  fs.readFile(invoicePath, (err, data) => {
+    //      if (err) {
+    //          return next(err)
+    //      }
+    //      res.setHeader('Content-Type', 'application/pdf');
+    //      res.setHeader('Content-Disposition', 'attachment; filename="' + invoiceName + '"')
+    //      res.send(data)
+    //  })
+
+    // const pdfDoc = new PDFDocument();
+    // pdfDoc.pipe(fs.createWriteStream(invoicePath));
+    // pdfDoc.pipe(res);
+
+    // pdfDoc.fontSize(26).text('Invoice', {
+    //     underline: true
+    // })
+    // let totlaPrice = 0
+    // order.products.forEach(prod => {
+    //     totlaPrice += prod.quantity * prod.product.price
+    //     pdfDoc.fontSize(16).text(prod.product.title + ' - ' + prod.quantity + ' x ' + '$' + prod.product.price)
+    // })
+
+    // pdfDoc.end()
+
+
+    // Order.findByPk(orderId)
+    //     .then(order => {
+    //         if (!order) {
+    //             return next(new Error('No order found'))
+    //         }
+    //         if (order.user.userId.toString() !== req.user.id.toString()) {
+    //             return next(new Error('Unauthorized'))
+    //         }
+
+    //    fs.readFile(invoicePath, (err, data) => {
+    //        if (err) {
+    //            return next(err)
+    //        }
+    //        res.setHeader('Content-Type', 'application/pdf');
+    //        res.setHeader('Content-Disposition', 'attachment; filename="' + invoiceName + '"')
+    //        res.send(data)
+    //    })
+    //     const file = fs.createReadStream(invoicePath);
+    //     res.setHeader('Content-Type', 'application/pdf');
+    //     res.setHeader('Content-Disposition', 'inline; filename="' + invoiceName + '"');
+
+
+    // })
+    // .catch(err => next(err))
+
+
+
+    // Product.findByPk(prodId)
+    //     .then(product => {
+    //         res.render('shop/product-detail', {
+    //             pageTitle: product.title,
+    //             products: product,
+    //             path: '/product',
+
+
+
+    //         })
+    //     })
+    //     .catch(err => console.log(err))
 }
 
 exports.getCheckout = (req, res, next) => {

@@ -196,7 +196,7 @@ exports.getDashboard = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
     Product.findByPk(prodId).then(product => {
-            fileHelper.deleteFile(product.imageUrl);
+            fileHelper(product.imageUrl);
             return product.destroy();
         })
         .then(result => {

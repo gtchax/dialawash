@@ -12,6 +12,7 @@ const fs = require('fs');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // const ejs = require('ejs');
 
+const PORT =  3050;
 const path = require('path');
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -21,7 +22,6 @@ const fileStorage = multer.diskStorage({
         cb(null, new Date().toISOString() + '_' + file.originalname)
     }
 })
-
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
         cb(null, true);
@@ -83,17 +83,23 @@ app.use((req, res, next) => {
     if (!req.session.isLoggedIn) {
         return next();
     }
+   
     User.findByPk(req.session.user.id)
         .then(user => {
             if (!user) {
                 return next()
             }
             req.user = user;
+            let firstname = req.user.firstname;
+            let lastname = req.user.lastname;
+            res.locals.firstname = firstname;
+            res.locals.lastname = lastname
             next();
         })
         .catch(err => {
             next(new Error(err))
         });
+
 
 })
 // app.use(csrfProtection)
@@ -109,6 +115,7 @@ app.set('views', 'views');
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
     let Admin;
+    let userName;
     if (req.session.user) {
         Admin = req.session.user.isAdmin
     } else {
@@ -175,11 +182,9 @@ sequelize.sync()
         //     price: 10,
         //     description: 'You bring your vehicle(s) to the carwash centre'
         // });
-        app.listen(process.env.PORT, () => {
-            console.log(`App listening on port ${process.env.PORT}`);
+        app.listen(PORT, () => {
+            console.log(`App listening on port ${PORT}`);
         })
     })
 
     .catch(err => console.log(err))
-
-

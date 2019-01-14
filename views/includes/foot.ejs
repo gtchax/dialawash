@@ -1,11 +1,55 @@
-
 <div class="footer">
     <div class="container">
         <p class="text-muted">
-Developed and powered by <a class="text-orange" href="http://www.svetu.co.zw" target="_blank">Svetu (PVT) LTD</a>
+            Developed and powered by <a class="text-orange" href="http://www.svetu.co.zw" target="_blank">Svetu (PVT)
+                LTD</a>
         </p>
     </div>
 </div>
+
+
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title main-text" id="logoutLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body main-text">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <form action="/auth/logout" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="nav-link btn btn-sm">Logout</button>
+                </form>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="payLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title main-text" id="payLabel">PayNow Checkout</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body main-text">Details.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+           
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

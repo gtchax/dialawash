@@ -6,12 +6,11 @@
    <%- include('../includes/navbar.ejs') %>
 
    <main class="homepage">
-      <% if (isAuthenticated) {%>
-     
-      <% }%>
+
       <div class="notice text-center">
          Dailawash services currently available in Mutare ONLY
       </div>
+
       <div class="container-fluid">
          <h1 class="text-center my-5 slim">Carwash made simple and convenient</h1>
          <div class="text-center">
@@ -34,8 +33,8 @@
          </div>
          <div class="row mt-5 ">
             <div class="col-sm-12 home-form-container">
-               <form action="/purchase" method="POST">
-
+               <form action="/cashsale" method="POST">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <div class="form-group">
                      <select name="services" id="serviceOptions" class="form-control">
                         <option value="0" disabled selected>Select A Service</option>
@@ -43,7 +42,8 @@
                            products.forEach(product => { %>
                         <option id="<%= product.title.replace(/ +/g, '').toLowerCase() %>" value="<%= product.title.replace(/ +/g, '').toLowerCase() %>">
                            <%= product.title  %>
-                           $<%= product.price  %>
+                           $
+                           <%= product.price  %>
                         </option>
                         <%  }) 
                            } else {%>
@@ -103,21 +103,21 @@
                               </h4>
 
                            </div>
-                           <div id="collapseOne" class="panel-collapse collapse in">
+                           <div id="collapseOne" class="panel-collapse collapse in" style="padding-left: 2.4rem;">
                               <div class="panel-body">
                                  <div class="driving-license-kind">
                                     <div class="row">
-                                       <div class="col-sm-6">
+                                       <div class="col-sm-6 interior-service">
                                           <h5 class="text-orange">Exterior</h5>
                                           <div class="checkbox">
                                              <input class="form-check-input" name="waxing" type="checkbox" id="service-waxing"
-                                                value="e1">
+                                                value="waxing">
                                              <label class="form-check-label" for="service-waxing">Waxing ($3.00)</label>
 
                                           </div>
                                           <div class="checkbox">
                                              <input class="form-check-input" name="underbelly" type="checkbox" id="service-underbelly"
-                                                value="e2">
+                                                value="underbelly">
                                              <label class="form-check-label" for="service-underbelly">Under Belly
                                                 flashing
                                                 ($2.00)</label>
@@ -125,36 +125,36 @@
                                           </div>
                                           <div class="checkbox">
                                              <input class="form-check-input" name="engine" type="checkbox" id="service-engine"
-                                                value="e3">
+                                                value="engine">
                                              <label class="form-check-label" for="service-engine">Engine Cleaning
                                                 ($3.00)</label>
 
                                           </div>
                                        </div>
-                                       <div class="col-sm-6">
+                                       <div class="col-sm-6 interior-service">
                                           <h5 class="text-orange">Interior</h5>
                                           <div class="checkbox">
                                              <input class="form-check-input" name="roof" type="checkbox" id="service-roof"
-                                                value="interior1">
+                                                value="roof">
                                              <label class="form-check-label" for="service-roof">Roof Cleaning ($5.00)</label>
 
                                           </div>
                                           <div class="checkbox">
                                              <input class="form-check-input" name="leather" type="checkbox" id="service-spray"
-                                                value="interior2">
+                                                value="leather">
                                              <label class="form-check-label" for="service-spray">Leather Spray ($5.00)</label>
 
                                           </div>
 
                                           <div class="checkbox">
                                              <input class="form-check-input" name="dashboard" type="checkbox" id="service-dashboard"
-                                                value="interiro3">
+                                                value="dashboard">
                                              <label class="form-check-label" for="service-dashboard">Dashboard Wax
                                                 ($4.00)</label>
                                           </div>
                                           <div class="checkbox">
                                              <input class="form-check-input" name="deodorise" type="checkbox" id="service-dashboard"
-                                                value="interiro4">
+                                                value="deodorise">
                                              <label class="form-check-label" for="service-deodorise">Deodorising
                                                 ($3.00)</label>
                                           </div>
@@ -173,7 +173,8 @@
 
 
                      <div class="form-group">
-                        <button type="submit" class="btn pay-btn"> Pay Now</button>
+                        <!-- <a href="#" class="btn pay-btn" data-toggle="modal" data-target="#payModal">Pay Now</a> -->
+                        <button type="submit" class="btn pay-btn" data-toggle="modal" data-target="#payModal"> Pay Now</button>
                      </div>
 
 

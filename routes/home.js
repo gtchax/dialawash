@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/', homeController.getHomePage);
 
-router.post('/purchase', homeController.postPurchase);
+router.post('/cashsale', homeController.postCashSale);
 
 
 module.exports = router;

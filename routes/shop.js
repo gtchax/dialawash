@@ -11,7 +11,9 @@ router.get('/products', isAuth, shopController.getProducts);
 router.get('/cart', isAuth, shopController.getCart);
 router.get('/checkout', isAuth, shopController.getCheckout);
 router.get('/orders',  isAuth, shopController.getOrders);
-router.get('/orders/:orderId', isAuth, shopController.getInvoice);
+// router.get('/orders/:orderId', isAuth, shopController.getInvoice);
+router.get('/orders/:orderId', isAuth, shopController.pdf);
+
 
 router.post('/cart',  shopController.postCart);
 router.post('/cart-delete-item',  shopController.postCartDeleteProduct)

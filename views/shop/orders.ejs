@@ -18,35 +18,53 @@
 
             <div class="row">
 
-                <div class="col-sm-12 text-center">
+                <div class="col-sm-12">
                     <div class="card-cart card-1">
                         <div class="card-body">
-                            <ul>
+                            <section class="checkout-panel">
                                 <%   orders.forEach(order => { %>
-                                <li>
-                                    <h1 class="main-text">Order - # 
-                                        <%= order.id %> - <a href="/orders/<%= order.id %>">Invoice</a>
-                                    </h1>
-                                    <ul>
-                                        <li class="main-text">
-                                            <% order.products.forEach(product => {%>
-                                        <li class="main-text">
-                                            <%= product.title %> (<%= product.orderItem.quantity %>)
-                                        </li>
-                                        <% }) %>
-                                        </li>
-                                    </ul>
-                                </li>
-                            <%  }) %>
-                            </ul>
 
+                                <h3 class="main-text">Order - #
+                                    <%= order.id %> - <a href="/shop/orders/<%= order.id %>">Invoice</a>
+                                </h3>
+                                <article class="price-grid">
+                                    <div class="main-text">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="p-2">
+                                                <span class="text-orange pl-10 " style="font-size: 0.7rem">
+                                                    Description </span>
+                                            </div>
+                                            <div class="p-2">
+                                                <span class="text-orange pr-7" style="font-size: 0.7rem">
+                                                    Quantity </span>
+                                            </div>
+                                        
+                                        </div>
+                                        <% order.products.forEach(product => {%>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="p-2">
+                                               <span class="main-text pl-10"> <%= product.title %> </span>
+                                            </div>
+                                            <div class="p-2">
+                                                <span class="main-text pr-10">(<%= product.orderItem.quantity %>) </span>
+                                            </div>
+
+                                        </div>
+                                        <hr class="w-5">
+                                        <% }) %>
+                                    </div>
+                                </article>
+<div class="divider"></div>
+                                <%  }) %>
+
+                            </section>
                         </div>
                     </div>
                 </div>
             </div>
 
             <% } else {%>
-        <h2 class="text-center">No Orders</h2>
+            <h2 class="text-center">No Orders</h2>
             <%  } %>
         </div>
     </main>

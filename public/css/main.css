@@ -1,5 +1,5 @@
 body {
-    background: rgba(5,56,110,1);
+    background: rgba(5, 56, 110, 1);
     color: #fff;
     /* background: url('../img/carwash.jpg');
     background-size: cover;
@@ -7,7 +7,7 @@ body {
     background-attachment: fixed; */
     position: relative;
     margin: 0;
-    padding:0;
+    padding: 0;
 
 }
 
@@ -26,8 +26,15 @@ body {
     color: rgba(5, 56, 110, 1);
     border: none;
     border: 2px solid rgba(5, 56, 110, 1);
-   
+
 }
+
+.fa-fw {
+
+    font-size: 1.4em;
+
+}
+
 
 .main-text {
     color: #333;
@@ -36,15 +43,35 @@ body {
 .price-text {
     font-size: 1.8em;
     color: rgba(5, 56, 110, 1);
-  
+
 }
 
 .no-border {
-    border:none !important;
+    border: none !important;
 }
 
 .py-10 {
     padding: 18px 0;
+}
+
+.pl-10 {
+    padding-left: 2rem;
+}
+
+.pr-10 {
+    padding-right: 2rem;
+}
+
+.pr-7 {
+    padding-right: 1.2rem;
+}
+
+.w-5 {
+    padding: 0;
+    margin: 0;
+    width: 89%;
+    margin: 0 auto;
+
 }
 
 .mt-10 {
@@ -52,31 +79,31 @@ body {
 }
 
 .card-link {
-   
+
     display: block;
-    
+
 }
 
 .card-price {
-background: orangered;
-color: #fff;
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
+    background: orangered;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 
 }
-
 
 
 .text-upper {
     text-transform: uppercase;
 }
 
-.card-price > a {
+.card-price>a {
     /* font-size: 1.8em; */
     color: #fff;
 }
+
 .card-box {
     background: #fff;
     border-radius: 2px;
@@ -92,7 +119,7 @@ width: 100%;
     position: absolute;
     bottom: 0;
     right: 0;
-   
+
 }
 
 .cart-product {
@@ -100,8 +127,8 @@ width: 100%;
     font-weight: 500;
     font-size: 1.75em;
     color: #333;
-     margin: 0;
-     padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .cart-quantity {
@@ -113,7 +140,8 @@ width: 100%;
     padding: 0;
 }
 
-a.card-price:hover, button.card-price:hover {
+a.card-price:hover,
+button.card-price:hover {
     font-size: 1.2em;
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
     color: #fff;
@@ -131,16 +159,17 @@ a.card-price:hover, button.card-price:hover {
     font-weight: 500;
     font-size: 1.45em;
     color: rgba(5, 56, 110, 1);
-     margin: 0;
-     padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .cart-btn {
-     padding: 0.2rem 0.8rem;
-     font-size: 1.5rem;
-     cursor: pointer;
-     border-top-left-radius: 2px;
+    padding: 0.2rem 0.8rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-top-left-radius: 2px;
 }
+
 .card-cart {
     background: #fff;
     border-radius: 2px;
@@ -148,7 +177,7 @@ a.card-price:hover, button.card-price:hover {
     max-width: 760px;
     margin: 1rem auto;
     position: relative;
-    
+
     box-sizing: border-box;
 }
 
@@ -158,11 +187,11 @@ a.card-price:hover, button.card-price:hover {
 }
 
 .login-input {
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-      0 1px 2px rgba(0, 0, 0, 0.24);
-      margin-bottom: 1.3rem;
-      width: 450px;
-     
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 1.3rem;
+    width: 450px;
+
 }
 
 .signup-input {
@@ -170,116 +199,132 @@ a.card-price:hover, button.card-price:hover {
         0 1px 2px rgba(0, 0, 0, 0.24);
     margin-bottom: 1.3rem;
 
-    
+
 
 }
+
 .loginpage {
-   display: flex;
-   justify-content: center;
-   align-content: center;
-    
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
 }
 
 .error-message {
     padding: 1.2em;
-     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-     0 1px 2px rgba(0, 0, 0, 0.24);
-     margin-bottom: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.24);
+    margin-bottom: 0.5rem;
 }
 
 .card-1:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
- #callout-box,
- #inhouse-box,
- #drivethrough-box
-     {
-     position: relative;
- }
+#callout-box,
+#inhouse-box,
+#drivethrough-box {
+    position: relative;
+}
 
- #total-price {
-     
-     padding: 0.5em 0.85em;
-     text-align: center;
-     color: #fff;
-     margin: 0 auto;
-     display: inline-block;
-     border-top: 2px solid #fff;
-     border-bottom: 2px solid #fff;
- }
+#total-price {
+
+    padding: 0.5em 0.85em;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto;
+    display: inline-block;
+    border-top: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+}
 
 .invalid {
-     outline: 2px solid red !important;
- }
+    outline: 2px solid red !important;
+}
 
 
- #callout-box,
- #inhouse-box,
- #drivethrough-box,
- #callout-data,
- #inhouse-data,
- #drivethrough-data,
- #service-data
-  {
-     display: none;
- }
+#callout-box,
+#inhouse-box,
+#drivethrough-box,
+#callout-data,
+#inhouse-data,
+#drivethrough-data,
+#service-data {
+    display: none;
+}
 
- .notice {
-     padding: 15px;
-     background: purple;
+.notice {
+    padding: 15px;
+    background: purple;
     display: none;
 
- }
+}
 
- .home-form-container {
+.client-info {
+    margin: 0;
+    /* padding: 0.8em 0 0 4.55em; */
+
+    padding: 15px;
+    background: purple;
+    display: inline-block;
+
+
+}
+
+.interior-service {
+    padding-bottom: 2rem;
+}
+
+.home-form-container {
     max-width: 700px;
     margin: 0 auto;
- }
+}
 
 
- .form-control {
-     border: none;
-     border-radius: 1px;
-     background: #f8f9fa;
+.form-control {
+    border: none;
+    border-radius: 1px;
+    background: #f8f9fa;
 
- }
-
-
- .pay-btn {
-     margin: 0.7rem 0;
-     background: orange;
-     color: #fff;
-     border-radius: 0;
- }
-
- .mr-15 {
-        margin-left: 15px;
- }
-
- .footer {
-     position: absolute;
-     bottom: -45vh;
-     left: 10%;
- }
-
- @media(min-width: 570px) {
-     .cart-btn {
-         padding: 0.8rem 0.9rem;
-         font-size: 1.6rem;
-         cursor: pointer;
-         border-top-left-radius: 0px;
-     }
- }
-
- @media(max-width: 460px) {
-   .login-input {
-     
-       width: 340px;
-
-   }
- }
+}
 
 
+.pay-btn {
+    margin: 0.7rem 0;
+    background: orange;
+    color: #fff;
+    border-radius: 0;
+}
+
+.mr-15 {
+    margin-left: 15px;
+}
+
+.footer {
+    position: absolute;
+    bottom: -45vh;
+    left: 10%;
+}
+
+@media(min-width: 570px) {
+    .cart-btn {
+        padding: 0.8rem 0.9rem;
+        font-size: 1.6rem;
+        cursor: pointer;
+        border-top-left-radius: 0px;
+    }
+}
+
+@media(max-width: 460px) {
+    .login-input {
+
+        width: 340px;
+
+    }
 
 
+    .client-info {
+
+        padding-left: 1.70em;
+    }
+}
